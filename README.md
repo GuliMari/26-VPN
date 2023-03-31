@@ -105,3 +105,58 @@ iperf Done.
 
 ## 2. Поднять RAS на базе OpenVPN с клиентскими сертификатами, подключиться с локальной машины на виртуалку.
 
+Настраиваем RAS с помощью `ansible` и заходим на сервер:
+
+```bash
+[root@ras ~]# systemctl status openvpn@server.service 
+● openvpn@server.service - OpenVPN Tunneling Application on server
+   Loaded: loaded (/etc/systemd/system/openvpn@.service; enabled; vendor preset: disabled)
+   Active: active (running) since Fri 2023-03-31 14:10:03 MSK; 52s ago
+ Main PID: 13878 (openvpn)
+   Status: "Initialization Sequence Completed"
+    Tasks: 1 (limit: 2749)
+   Memory: 1.7M
+   CGroup: /system.slice/system-openvpn.slice/openvpn@server.service
+           └─13878 /usr/sbin/openvpn --cd /etc/openvpn/server --config server.conf
+
+Mar 31 14:10:03 ras systemd[1]: Starting OpenVPN Tunneling Application on server...
+Mar 31 14:10:03 ras systemd[1]: Started OpenVPN Tunneling Application on server.
+[root@ras ~]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:03:15:fa brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0
+       valid_lft 86203sec preferred_lft 86203sec
+    inet6 fe80::5054:ff:fe03:15fa/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:5a:de:13 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.56.10/24 brd 192.168.56.255 scope global noprefixroute eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:fe5a:de13/64 scope link 
+       valid_lft forever preferred_lft forever
+4: tun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UNKNOWN group default qlen 100
+    link/none 
+    inet 10.10.10.1 peer 10.10.10.2/32 scope global tun0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::d8b5:4435:1462:442b/64 scope link stable-privacy 
+       valid_lft forever preferred_lft forever
+[root@ras ~]# ip r
+default via 10.0.2.2 dev eth0 proto dhcp metric 100 
+10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15 metric 100 
+10.10.10.0/24 via 10.10.10.2 dev tun0 
+10.10.10.2 dev tun0 proto kernel scope link src 10.10.10.1 
+192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.10 metric 101 
+
+```
+
+Подключаемся к серверу с хоста и проверяем пинг по внутреннему IP сервера в туннеле:
+
+```bash
+
+```
