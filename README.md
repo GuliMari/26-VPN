@@ -121,6 +121,7 @@ iperf Done.
 
 Mar 31 14:10:03 ras systemd[1]: Starting OpenVPN Tunneling Application on server...
 Mar 31 14:10:03 ras systemd[1]: Started OpenVPN Tunneling Application on server.
+[root@ras ~]#
 [root@ras ~]# ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -146,17 +147,69 @@ Mar 31 14:10:03 ras systemd[1]: Started OpenVPN Tunneling Application on server.
        valid_lft forever preferred_lft forever
     inet6 fe80::d8b5:4435:1462:442b/64 scope link stable-privacy 
        valid_lft forever preferred_lft forever
+[root@ras ~]#
 [root@ras ~]# ip r
 default via 10.0.2.2 dev eth0 proto dhcp metric 100 
 10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15 metric 100 
 10.10.10.0/24 via 10.10.10.2 dev tun0 
 10.10.10.2 dev tun0 proto kernel scope link src 10.10.10.1 
 192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.10 metric 101 
-
+[root@ras ~]#
+[root@ras ~]# tail -f /var/log/openvpn-status.log 
+OpenVPN CLIENT LIST
+Updated,Fri Mar 31 15:33:31 2023
+Common Name,Real Address,Bytes Received,Bytes Sent,Connected Since
+client,192.168.56.1:1194,3019,3260,Fri Mar 31 15:33:24 2023
+ROUTING TABLE
+Virtual Address,Common Name,Real Address,Last Ref
+10.10.10.6,client,192.168.56.1:1194,Fri Mar 31 15:33:24 2023
+GLOBAL STATS
+Max bcast/mcast queue length,0
+END
 ```
 
 Подключаемся к серверу с хоста и проверяем пинг по внутреннему IP сервера в туннеле:
 
 ```bash
+root@tw4-mint:/etc/openvpn/client# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s31f6: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN group default qlen 1000
+    link/ether 84:7b:eb:1d:18:2b brd ff:ff:ff:ff:ff:ff
+3: wlp2s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether e4:a4:71:d9:a8:14 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.88.56/24 brd 192.168.88.255 scope global dynamic noprefixroute wlp2s0
+       valid_lft 350sec preferred_lft 350sec
+    inet6 fe80::3e62:ae0b:d807:97a4/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+4: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:aa:7a:8c:65 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+5: vboxnet0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 0a:00:27:00:00:00 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.56.1/24 brd 192.168.56.255 scope global vboxnet0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::800:27ff:fe00:0/64 scope link 
+       valid_lft forever preferred_lft forever
+6: tun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UNKNOWN group default qlen 500
+    link/none 
+    inet 10.10.10.6 peer 10.10.10.5/32 scope global tun0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::37f4:69ff:c9cb:3df8/64 scope link stable-privacy 
+       valid_lft forever preferred_lft forever
+root@tw4-mint:/etc/openvpn/client#
+root@tw4-mint:/etc/openvpn/client# ip r
+default via 192.168.88.1 dev wlp2s0 proto dhcp metric 600 
+10.10.10.0/24 via 10.10.10.5 dev tun0 
+10.10.10.5 dev tun0 proto kernel scope link src 10.10.10.6 
+169.254.0.0/16 dev wlp2s0 scope link metric 1000 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
+192.168.56.0/24 via 10.10.10.5 dev tun0 
+192.168.88.0/24 dev wlp2s0 proto kernel scope link src 192.168.88.56 metric 600        
 
 ```
