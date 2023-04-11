@@ -221,22 +221,22 @@ default via 192.168.88.1 dev wlp2s0 proto dhcp metric 600
 В telegram-чате пытались помочь)))
 Если подскажете, куда копать, буду благодарна))) 
 
-/var/log/openvpn хостовой машины:
-` Mar 31 15:37:31 tw4-mint openvpn[7638]: [rasvpn] Inactivity timeout (--ping-restart), restarting
-Mar 31 15:37:31 tw4-mint openvpn[7638]: SIGUSR1[soft,ping-restart] received, process restarting
-Mar 31 15:37:31 tw4-mint openvpn[7638]: Restart pause, 5 second(s)
-Mar 31 15:37:36 tw4-mint openvpn[7638]: TCP/UDP: Preserving recently used remote address: [AF_INET]192.168.56.10:1207
-Mar 31 15:37:36 tw4-mint openvpn[7638]: Socket Buffers: R=[212992->212992] S=[212992->212992]
-Mar 31 15:37:36 tw4-mint openvpn[7638]: UDP link local (bound): [AF_INET][undef]:1194
-Mar 31 15:37:36 tw4-mint openvpn[7638]: UDP link remote: [AF_INET]192.168.56.10:1207
-Mar 31 15:37:52 tw4-mint NetworkManager[933]: <info>  [1680266272.6819] dhcp4 (wlp2s0): state changed new lease, address=192.168.88.56
-Mar 31 15:38:36 tw4-mint openvpn[7638]: TLS Error: TLS key negotiation failed to occur within 60 seconds (check your network connectivity)
-Mar 31 15:38:36 tw4-mint openvpn[7638]: TLS Error: TLS handshake failed
-Mar 31 15:38:36 tw4-mint openvpn[7638]: SIGUSR1[soft,tls-error] received, process restarting
-Mar 31 15:38:36 tw4-mint openvpn[7638]: Restart pause, 5 second(s)
-Mar 31 15:38:41 tw4-mint openvpn[7638]: TCP/UDP: Preserving recently used remote address: [AF_INET]192.168.56.10:1207
-Mar 31 15:38:41 tw4-mint openvpn[7638]: Socket Buffers: R=[212992->212992] S=[212992->212992]
-Mar 31 15:38:41 tw4-mint openvpn[7638]: UDP link local (bound): [AF_INET][undef]:1194
-Mar 31 15:38:41 tw4-mint openvpn[7638]: UDP link remote: [AF_INET]192.168.56.10:1207
-Mar 31 15:39:41 tw4-mint openvpn[7638]: TLS Error: TLS key negotiation failed to occur within 60 seconds (check your network connectivity)
-Mar 31 15:39:41 tw4-mint openvpn[7638]: TLS Error: TLS handshake failed `
+/var/log/openvpn хостовой машины:   
+` Mar 31 15:37:31 tw4-mint openvpn[7638]: [rasvpn] Inactivity timeout (--ping-restart), restarting   
+Mar 31 15:37:31 tw4-mint openvpn[7638]: SIGUSR1[soft,ping-restart] received, process restarting   
+Mar 31 15:37:31 tw4-mint openvpn[7638]: Restart pause, 5 second(s)   
+Mar 31 15:37:36 tw4-mint openvpn[7638]: TCP/UDP: Preserving recently used remote address: [AF_INET]192.168.56.10:1207   
+Mar 31 15:37:36 tw4-mint openvpn[7638]: Socket Buffers: R=[212992->212992] S=[212992->212992]   
+Mar 31 15:37:36 tw4-mint openvpn[7638]: UDP link local (bound): [AF_INET][undef]:1194   
+Mar 31 15:37:36 tw4-mint openvpn[7638]: UDP link remote: [AF_INET]192.168.56.10:1207   
+Mar 31 15:37:52 tw4-mint NetworkManager[933]: <info>  [1680266272.6819] dhcp4 (wlp2s0): state changed new lease, address=192.168.88.56   
+Mar 31 15:38:36 tw4-mint openvpn[7638]: TLS Error: TLS key negotiation failed to occur within 60 seconds (check your network connectivity)   
+Mar 31 15:38:36 tw4-mint openvpn[7638]: TLS Error: TLS handshake failed   
+Mar 31 15:38:36 tw4-mint openvpn[7638]: SIGUSR1[soft,tls-error] received, process restarting   
+Mar 31 15:38:36 tw4-mint openvpn[7638]: Restart pause, 5 second(s)   
+Mar 31 15:38:41 tw4-mint openvpn[7638]: TCP/UDP: Preserving recently used remote address: [AF_INET]192.168.56.10:1207   
+Mar 31 15:38:41 tw4-mint openvpn[7638]: Socket Buffers: R=[212992->212992] S=[212992->212992]   
+Mar 31 15:38:41 tw4-mint openvpn[7638]: UDP link local (bound): [AF_INET][undef]:1194   
+Mar 31 15:38:41 tw4-mint openvpn[7638]: UDP link remote: [AF_INET]192.168.56.10:1207   
+Mar 31 15:39:41 tw4-mint openvpn[7638]: TLS Error: TLS key negotiation failed to occur within 60 seconds (check your network connectivity)   
+Mar 31 15:39:41 tw4-mint openvpn[7638]: TLS Error: TLS handshake failed `   
